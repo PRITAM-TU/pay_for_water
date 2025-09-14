@@ -1,0 +1,74 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-content">
+    <div class="form-section">
+        <h2>Submit Payment</h2>
+        <form id="paymentForm" action="/submit" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Payment Method</label>
+                <div class="radio-group">
+                    <input type="radio" id="cash" name="paymentType" value="cash" checked>
+                    <label for="cash">Cash</label>
+                    
+                    <input type="radio" id="online" name="paymentType" value="online">
+                    <label for="online">Online</label>
+                </div>
+            </div>
+            
+            <div class="form-group" id="screenshotField" style="display: none;">
+                <label for="screenshot">Screenshot of Payment</label>
+                <input type="file" id="screenshot" name="screenshot" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="date">Payment Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Payment</button>
+        </form>
+    </div>
+    
+    <div class="details-section">
+        <h2>Payment Records</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Payment Type</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.name }}</td>
+                        <td>{{ payment.email }}</td>
+                        <td>{{ payment.payment_type|capitalize }}</td>
+                        <td>{{ payment.date.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="no-data">No payments recorded yet</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
