@@ -7,7 +7,7 @@ from datetime import datetime
 from bson import ObjectId
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "your-secret-key-here"
+app.config["SECRET_KEY"] = '\xca\x0c\x86\x04\x98@\x02b\x1b7\x8c\x88]\x1b\xd7"+\xe6px@\xc3#\\'
 app.config["MONGO_URI"] = "mongodb+srv://pritamtung03_db_user:WLIFVuRwEev7APoP@cluster0.4ysopge.mongodb.net/Study_game"
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
