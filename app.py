@@ -1,10 +1,12 @@
 # app.py
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
 from bson import ObjectId
+import certifi
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = '\xca\x0c\x86\x04\x98@\x02b\x1b7\x8c\x88]\x1b\xd7"+\xe6px@\xc3#\\'
@@ -12,7 +14,16 @@ app.config["MONGO_URI"] = "mongodb+srv://pritamtung03_db_user:WLIFVuRwEev7APoP@c
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
-mongo = PyMongo(app)
+
+# Replace with your actual connection string
+uri = "mongodb+srv://pritamtung03_db_user:WLIFVuRwEev7APoP@cluster0.4ysopge.mongodb.net/Study_game"
+
+mongo = MongoClient(
+    app.config["MONGO_URI"],
+    tls=True,  # Explicitly enable TLS
+    tlsCAFile=certifi.where(),  # Use the CA bundle from the 'certifi' package
+    serverSelectionTimeoutMS=20000  # Set a timeout for server selection
+)
 
 # Allowed file extensions
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
